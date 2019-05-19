@@ -14,3 +14,15 @@
 ## 11,2
 ## 12,3
 ##
+
+import itertools as it 
+from operator import itemgetter as ig
+
+with open("data.csv", "r") as f:
+    data = [_.strip() for _ in f.readlines()]
+    data = [_.split("\t") for _ in data]
+
+    fechas = sorted([_[2].split("-") for _ in data], key=ig(1))
+
+    for key, group in it.groupby(fechas, ig(1)):
+        print(f"{key},{len( list( group ) )}")

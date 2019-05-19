@@ -15,3 +15,18 @@
 ## jjj,18
 ##
 ##
+
+import itertools as it 
+from operator import itemgetter as ig 
+
+with open("data.csv", "r") as f:
+    data = [_.strip() for _ in f.readlines()]
+    data = [_.split("\t") for _ in data]
+
+    row4 = [_[4].split(",") for _ in data]
+    row4_flat = list(it.chain(*row4))
+
+    row4 = sorted([_.split(":") for _ in row4_flat], key=ig(0))
+
+    for key, group in it.groupby(row4, ig(0)):
+        print(f"{key},{len(list(group))}")
