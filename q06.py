@@ -12,4 +12,21 @@
 ## hhh,6,8
 ## iii,2,7
 ## jjj,2,5
-##
+
+buffer = dict()
+
+with open("data.csv", "r") as f:
+    q = [line.split()[4] for line in f.readlines()]
+    for i in q:
+        splitted = i.split(",")
+        for j in splitted:
+            key, value = j.split(":")
+
+            if key in buffer:
+                buffer[key].append(int(value))
+            else:
+                buffer[key] = [int(value)]
+
+for i in sorted(buffer):
+    print(f"{i},{min(buffer[i])},{max(buffer[i])}")
+
